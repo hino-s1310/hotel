@@ -14,6 +14,8 @@ class MyPage:
         self.gender_text = page.locator("id=gender")
         self.birthday_text = page.locator("id=birthday")
         self.notification_text = page.locator("id=notification")
+        self.set_icon_button = page.get_by_role("button", name="アイコン設定")
+        self.withdraw_button = page.get_by_role("button", "退会する")
         self.logout_button = page.get_by_role("button", name="ログアウト")
         self.reserve_link = page.get_by_role("link", name="宿泊予約")
 
@@ -25,3 +27,11 @@ class MyPage:
 
     def click_logout(self) -> None:
         self.logout_button.click()
+
+    def click_set_icon(self) -> None:
+        self.set_icon_button.click()
+
+    def withdraw_member(self, page) -> None:
+        self.withdraw_button.click()
+        page.on("dialog", lambda dialog: dialog.accept())
+        page.get_by_label("OK").click()
