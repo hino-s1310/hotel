@@ -41,10 +41,10 @@ class SignUpPage:
     # 会員ランクのラジオボックスを選択
     def  select_rank(self, rank) -> None:
         if rank == "プレミアム会員":
-            if not self.premium_rank_radiobox.is_checked() == False:
+            if not self.premium_rank_radiobox.is_checked() == True:
                 self.premium_rank_radiobox.check()
         elif rank == "一般会員":
-            if not self.normal_rank_radiobox_rank_radiobox.is_checked() == False:
+            if not self.normal_rank_radiobox.is_checked() == True:
                 self.normal_rank_radiobox.check()
 
     # 住所欄入力
@@ -61,8 +61,6 @@ class SignUpPage:
 
     # 誕生日入力
     def fill_birthday(self, birth_day) -> None:
-#        birth_day = str(year) + "-" + str(month) + "-" + str(day)
-
         # 誕生日入力
         self.birthday_input.fill(birth_day)
 
