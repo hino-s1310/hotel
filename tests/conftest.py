@@ -8,6 +8,7 @@ from hotel.pages.mypage import MyPage
 from hotel.pages.plans import PlansPage
 from hotel.pages.reserve import ReservePage
 from hotel.pages.signup import SignUpPage
+from hotel.pages.icon import IconPage
 
 from playwright.sync_api import Page, sync_playwright
 
@@ -34,3 +35,7 @@ def reserve_page(page: Page) -> ReservePage:
 @pytest.fixture
 def signup_page(page: Page) -> SignUpPage:
     return SignUpPage(page)
+
+@pytest.fixture
+def icon_page(page: Page) -> IconPage:
+    return IconPage(page)
