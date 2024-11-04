@@ -1,12 +1,14 @@
 from playwright.sync_api import Page
+from hotel.components.header import Header
+
 
 class HomePage:
     URL = "https://hotel.testplanisphere.dev/ja/index.html"
 
-    def __init__(self, page: Page) -> None:
+    def __init__(self, page: Page, header:Header) -> None:
         self.page = page
-        self.login_button = page.get_by_role("button", name="ログイン")
-        self.signup_link = page.get_by_role("link", name="会員登録")
+        self.login_button = header.login_button
+        self.signup_link = header.signup_link
 
     def load(self) -> None:
         self.page.goto(self.URL)

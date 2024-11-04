@@ -10,19 +10,25 @@ from hotel.pages.reserve import ReservePage
 from hotel.pages.signup import SignUpPage
 from hotel.pages.icon import IconPage
 
-from playwright.sync_api import Page, sync_playwright
+from hotel.components.header import Header
+
+from playwright.sync_api import Page
 
 @pytest.fixture
-def home_page(page: Page) -> HomePage:
-    return HomePage(page)
+def header(page: Page) -> Header:
+    return Header(page)
+
+@pytest.fixture
+def home_page(page: Page, header:Header) -> HomePage:
+    return HomePage(page, header)
 
 @pytest.fixture
 def login_page(page: Page) -> LoginPage:
     return LoginPage(page)
 
 @pytest.fixture
-def my_page(page: Page) -> MyPage:
-    return MyPage(page)
+def my_page(page: Page, header:Header) -> MyPage:
+    return MyPage(page, header)
 
 @pytest.fixture
 def plans_page(page: Page) -> PlansPage:

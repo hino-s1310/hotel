@@ -1,9 +1,10 @@
 from playwright.sync_api import Page
+from hotel.components.header import Header
 
 class MyPage:
     URL = "https://hotel.testplanisphere.dev/ja/mypage.html"
 
-    def __init__(self, page: Page) -> None:
+    def __init__(self, page: Page, header:Header) -> None:
         self.page = page
         self.mypage_heading = page.get_by_role("heading", name="マイページ")
         self.email_text = page.locator("id=email")
@@ -16,8 +17,8 @@ class MyPage:
         self.notification_text = page.locator("id=notification")
         self.set_icon_button = page.get_by_role("button", name="アイコン設定")
         self.withdraw_button = page.get_by_role("button", name="退会する")
-        self.logout_button = page.get_by_role("button", name="ログアウト")
-        self.reserve_link = page.get_by_role("link", name="宿泊予約")
+        self.logout_button = header.logout_button
+        self.reserve_link = header.reserve_link
         self.icon = page.get_by_role("img")
 
     def load(self) -> None:
