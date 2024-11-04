@@ -32,7 +32,8 @@ class MyPage:
     def click_set_icon(self) -> None:
         self.set_icon_button.click()
 
-    def withdraw_member(self, page) -> None:
+    def withdraw_member(self) -> None:
         self.withdraw_button.click()
-        page.on("dialog", lambda dialog: dialog.accept())
-        page.get_by_label("OK").click()
+        self.page.on("dialog", lambda dialog: dialog.accept())
+        self.page.on("dialog", lambda dialog: dialog.accept())
+

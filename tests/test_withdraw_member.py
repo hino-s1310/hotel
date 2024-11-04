@@ -3,21 +3,19 @@ import re
 from hotel.pages.home import HomePage
 from hotel.pages.mypage import MyPage
 from hotel.pages.signup import SignUpPage
-from hotel.pages.icon import IconPage
 from playwright.sync_api import Page, expect
 import pytest
 
 
 
-@pytest.mark.parametrize("usr_name,email,pwd,pwd_confirm,rank,address,phone,gender,birthday,validate_birthday,check_flag,img_path,slider_value,RGB_value,validate_RGB_value,screenshot_path",
-                        [("森本雄介","yusuke@example.com","pazzw0rd","pazzw0rd","プレミアム会員","豊島区","04099999999","男性","1999-01-01","1999年1月1日", "受け取る","tests/imgs/icon_img.jpg","50","#000000","rgb(0, 0, 0)","screenshots/icon/icon_screenshot.png")])
+@pytest.mark.parametrize("usr_name,email,pwd,pwd_confirm,rank,address,phone,gender,birthday,validate_birthday,check_flag",
+                        [("森本雄介","yusuke@example.com","pazzw0rd","pazzw0rd","プレミアム会員","豊島区","04099999999","男性","1999-01-01","1999年1月1日", "受け取る")])
 
 
-def test_set_icon(page: Page,
+def test_withdraw_member(page: Page,
                 home_page: HomePage,
                 my_page: MyPage,
                 signup_page: SignUpPage,
-                icon_page: IconPage,
                 usr_name,
                 email,
                 pwd,
@@ -27,12 +25,8 @@ def test_set_icon(page: Page,
                 phone,
                 gender,
                 birthday,
-                check_flag,
-                img_path,
-                slider_value,
-                RGB_value,
-                validate_RGB_value,
-                screenshot_path) -> None:
+                validate_birthday,
+                check_flag) -> None:
     
     # ホームページを開く
     home_page.load()
@@ -52,7 +46,7 @@ def test_set_icon(page: Page,
     # パスワード欄を入力する
     signup_page.fill_password(pwd)
 
-    # パスワード確認欄に「<password_confirm>」を入力する
+    # パスワード確認欄を入力する
     signup_page.fill_password_confirm(pwd_confirm)
 
     # 氏名欄を入力する
@@ -82,32 +76,8 @@ def test_set_icon(page: Page,
     # ページの見出しが「マイページ」であることを確認する
     expect(my_page.mypage_heading).to_contain_text("マイページ")
 
-    # アイコン設定ボタンを押下
-    my_page.set_icon_button.click()
+    # 退会するボタンを押下
+    my_page.withdraw_member()
 
-    # アイコンページに遷移したことを確認
-    expect(icon_page.iconpage_heading).to_contain_text("アイコン設定")
-
-    # 画像のアップロード
-    icon_page.upload_img(img_path)
-    
-    #拡大縮小スライダーの設定
-    icon_page.set_scaling(slider_value)
-
-    # 枠線の色を選択
-    icon_page.fill_color(RGB_value)
-
-    # 確定ボタンを押下
-    icon_page.click_confirm()
-
-    # ページの見出しが「マイページ」であることを確認する
-    expect(my_page.mypage_heading).to_contain_text("マイページ")
-
-    # アイコンが存在していることを検証する
-    expect(my_page.icon).to_be_visible()
-
-    # アイコンの枠の色が設定した色であることを確認する
-    expect(my_page.icon).to_have_css("background-color", validate_RGB_value)
-
-    # アイコンのスクリーンショットを作成する
-    my_page.icon.screenshot(path=screenshot_path)
+    # タイトルに「HOTEL PLANISPHERE」が含まれていることを確認
+    expect(page).to_have_title(re.compile("HOTEL PLANISPHERE"))
