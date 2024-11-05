@@ -1,12 +1,13 @@
 from playwright.sync_api import Page
+from hotel.components.header import Header
 
 class PlansPage:
     URL = "https://hotel.testplanisphere.dev/ja/plans.html"
 
-    def __init__(self, page: Page) -> None:
+    def __init__(self, page: Page, header:Header) -> None:
         self.page = page
         self.plans_heading = page.get_by_role("heading", name="宿泊プラン一覧")
-        self.logout_button = page.get_by_role("button", name="ログアウト")
+        self.logout_button = header.logout_button
         self.premium_text = page.get_by_role("heading", name="プレミアムプラン")
         self.reserve_this_plan = page.locator("a:below(:text(\"プレミアムプラン\"))").first
 
