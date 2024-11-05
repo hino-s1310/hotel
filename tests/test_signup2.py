@@ -1,9 +1,5 @@
-import re
-
-from hotel.pages.home import HomePage
 from hotel.pages.mypage import MyPage
-from hotel.pages.signup import SignUpPage
-from playwright.sync_api import Page, expect
+from playwright.sync_api import expect
 import pytest
 
 @pytest.mark.parametrize("usr_name,email,rank,address,phone,gender,validate_birthday,check_flag",
