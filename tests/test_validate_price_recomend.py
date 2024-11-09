@@ -25,7 +25,7 @@ def test_validate_price(page: Page,
                         flag_sightseeing,
                         price) -> None:
 
-        # ホームページを開く
+        # 予約ページを開く
         reserve_page.load()
 
         # タイトルに「HOTEL PLANISPHERE」が含まれていることを確認
