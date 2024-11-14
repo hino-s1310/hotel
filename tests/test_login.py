@@ -1,10 +1,8 @@
-import re
-
 from hotel.pages.home import HomePage
 from hotel.pages.login import LoginPage
 from hotel.pages.mypage import MyPage
 from playwright.sync_api import Page, expect
-import pytest
+import re,pytest
 
 @pytest.mark.parametrize("usr_name,email,pwd,rank",
                         [("山田一郎","ichiro@example.com","password","プレミアム会員"),

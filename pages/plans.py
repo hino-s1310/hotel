@@ -8,9 +8,7 @@ class PlansPage:
         self.page = page
         self.plans_heading = page.get_by_role("heading", name="宿泊プラン一覧")
         self.logout_button = header.logout_button
-        self.premium_text = page.get_by_role("heading", name="プレミアムプラン")
-        self.reserve_this_plan = page.locator("a:below(:text(\"プレミアムプラン\"))").first
-
+#        self.reserve_this_plan = page.get_by_role("link", name="このプランで予約")
 
     def load(self) -> None:
         self.page.goto(self.URL)
@@ -18,5 +16,5 @@ class PlansPage:
     def click_logout(self) -> None:
         self.logout_button.click()
 
-    def click_this_reserve(self) -> None:
-        self.reserve_this_plan.click()
+    def click_this_reserve(self, plan_name) -> None:
+        self.page.get_by_role("link", name="このプランで予約").first.click()
