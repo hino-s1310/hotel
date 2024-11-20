@@ -3,7 +3,7 @@ from pages.login import LoginPage
 from pages.mypage import MyPage
 from pages.plans import PlansPage
 from pages.reserve import ReservePage
-from confirm import ConfirmPage
+from pages.confirm import ConfirmPage
 from playwright.sync_api import Page, expect
 import re,pytest
 
