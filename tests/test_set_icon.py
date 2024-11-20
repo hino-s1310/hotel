@@ -1,5 +1,5 @@
-from hotel.pages.mypage import MyPage
-from hotel.pages.icon import IconPage
+from pages.mypage import MyPage
+from pages.icon import IconPage
 from playwright.sync_api import expect
 import pytest
 import datetime

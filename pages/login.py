@@ -1,4 +1,4 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
 
 class LoginPage:
     URL = "https://hotel.testplanisphere.dev/ja/login.html"
@@ -13,7 +13,6 @@ class LoginPage:
     def load(self) -> None:
         self.page.goto(self.URL)
     
-
     def submit_login(self, email: str, password:str) -> None:
         self.email_input.fill(email)
         self.password_input.fill(password)

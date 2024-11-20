@@ -1,6 +1,6 @@
-from hotel.pages.home import HomePage
-from hotel.pages.login import LoginPage
-from hotel.pages.mypage import MyPage
+from pages.home import HomePage
+from pages.login import LoginPage
+from pages.mypage import MyPage
 from playwright.sync_api import Page, expect
 import re,pytest
 

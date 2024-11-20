@@ -1,4 +1,4 @@
-from hotel.pages.mypage import MyPage
+from pages.mypage import MyPage
 from playwright.sync_api import expect
 import pytest
 

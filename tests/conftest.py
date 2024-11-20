@@ -1,19 +1,16 @@
 import pytest
-import sys
-import re
+import re,os,sys
+sys.path.append(os.getcwd())
 
-sys.path.append('../')
-from hotel.pages.home import HomePage
-from hotel.pages.login import LoginPage
-from hotel.pages.mypage import MyPage
-from hotel.pages.plans import PlansPage
-from hotel.pages.reserve import ReservePage
-from hotel.pages.confirm import ConfirmPage
-from hotel.pages.signup import SignUpPage
-from hotel.pages.icon import IconPage
-
-from hotel.components.header import Header
-
+from pages.home import HomePage
+from pages.login import LoginPage
+from pages.mypage import MyPage
+from pages.plans import PlansPage
+from pages.reserve import ReservePage
+from pages.confirm import ConfirmPage
+from pages.signup import SignUpPage
+from pages.icon import IconPage
+from components.header import Header
 from playwright.sync_api import Page, expect
 
 @pytest.fixture

@@ -1,5 +1,5 @@
 from playwright.sync_api import Page
-from hotel.components.header import Header
+from components.header import Header
 
 
 class HomePage:
