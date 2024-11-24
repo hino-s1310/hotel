@@ -51,8 +51,7 @@ def icon_page(page: Page) -> IconPage:
 
 #  新規会員登録する処理
 @pytest.fixture
-def signup(page: Page,
-            home_page: HomePage,
+def signup( home_page: HomePage,
             signup_page: SignUpPage,
             my_page: MyPage):
     # setup
@@ -60,7 +59,7 @@ def signup(page: Page,
     home_page.load()
         
     # タイトルに「HOTEL PLANISPHERE」が含まれていることを確認
-    expect(page).to_have_title(re.compile("HOTEL PLANISPHERE"))
+    expect(home_page.page).to_have_title(re.compile("HOTEL PLANISPHERE"))
 
     # 会員登録リンクを押下する
     home_page.click_signup()

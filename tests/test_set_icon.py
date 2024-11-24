@@ -1,18 +1,12 @@
-from pages.mypage import MyPage
-from pages.icon import IconPage
 from playwright.sync_api import expect
-import pytest
-import datetime
-
-
+import pytest,datetime
 
 @pytest.mark.parametrize("img_path,slider_value,RGB_value,validate_RGB_value,screenshot_path",
                         [("tests/imgs/icon_img.jpg","50","#000000","rgb(0, 0, 0)","screenshots/icon/")])
 
-
 def test_set_icon(signup,
-                my_page: MyPage,
-                icon_page: IconPage,
+                my_page,
+                icon_page,
                 img_path,
                 slider_value,
                 RGB_value,
@@ -24,6 +18,11 @@ def test_set_icon(signup,
 
     # アイコンページに遷移したことを確認
     expect(icon_page.iconpage_heading).to_contain_text("アイコン設定")
+
+    # 各項目の表示待機
+    icon_page.upload_input.wait_for()
+    icon_page.scaling_input.wait_for()
+    icon_page.color_input.wait_for()
 
     # 画像のアップロード
     icon_page.upload_img(img_path)
@@ -48,4 +47,4 @@ def test_set_icon(signup,
 
     # アイコンのスクリーンショットを作成する
     now = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-    my_page.icon.screenshot(path=screenshot_path + "{now}_icon_screenshot.png")
+    my_page.icon.screenshot(path=screenshot_path + now + "_icon_screenshot.png")

@@ -1,22 +1,17 @@
-from pages.home import HomePage
-from pages.login import LoginPage
-from pages.mypage import MyPage
-from pages.plans import PlansPage
+from playwright.sync_api import expect
 from pages.reserve import ReservePage
 from pages.confirm import ConfirmPage
-from playwright.sync_api import Page, expect
-import re,pytest
+import re,pytest,datetime
 
-@pytest.mark.parametrize("name,email,pwd,plan_name,plan_id,stay_num,people_num,flag_morning,flag_noon_checkin,flag_reasnable_sightseeing,confirm_contact,total_bill,additional_plan,comment",
-                        [("山田一郎","ichiro@example.com","password","お得な特典付きプラン","0","1","1",False,False,False,"希望しない","7,000","なし","なし")])
+@pytest.mark.parametrize("name,email,pwd,plan_name,plan_id,stay_num,people_num,flag_morning,flag_noon_checkin,flag_reasnable_sightseeing,confirm_contact,total_bill_weekday,total_bill_holiday,additional_plan,comment",
+                        [("山田一郎","ichiro@example.com","password","お得な特典付きプラン","0","1","1",False,False,False,"希望しない","7,000","8,750","なし","なし")])
 
-def test_validate_price(page: Page,
-                        home_page: HomePage,
-                        login_page: LoginPage,
-                        my_page: MyPage,
-                        plans_page: PlansPage,
-                        reserve_page: ReservePage,
-                        confirm_page: ConfirmPage,
+def test_validate_price(home_page,
+                        login_page,
+                        my_page,
+                        plans_page,
+                        reserve_page,
+                        confirm_page,
                         name,
                         email,
                         pwd,
@@ -28,7 +23,8 @@ def test_validate_price(page: Page,
                         flag_noon_checkin,
                         flag_reasnable_sightseeing,
                         confirm_contact,
-                        total_bill,
+                        total_bill_weekday,
+                        total_bill_holiday,
                         additional_plan,
                         comment) -> None:
 
@@ -36,7 +32,7 @@ def test_validate_price(page: Page,
         home_page.load()
 
         # タイトルに「HOTEL PLANISPHERE」が含まれていることを確認
-        expect(page).to_have_title(re.compile("HOTEL PLANISPHERE"))
+        expect(home_page.page).to_have_title(re.compile("HOTEL PLANISPHERE"))
 
         # ログインボタンを押下する
         home_page.click_login()
@@ -91,6 +87,7 @@ def test_validate_price(page: Page,
         reserve_page.select_contact(confirm_contact)
 
         # 金額検証
+        total_bill = calc_holiday_price(total_bill_weekday, total_bill_holiday)
         expect(reserve_page.total_bill).to_contain_text(total_bill)
 
         # 宿泊予約確認ページ遷移確認
@@ -133,4 +130,18 @@ def test_validate_price(page: Page,
 def handle_page(page):
     page.wait_for_load_state()
     print(page.title())
+
+
+def calc_holiday_price(price_weekday,price_holiday) -> str:
+
+    today = datetime.datetime.now()
+    tomorrow = today  + datetime.timedelta(days= 1)
+    # 翌日の曜日を取得し、土日かどうか判定
+    if tomorrow.weekday() >= 5:
+        # 休日料金を返却
+        return price_holiday
+    else:
+        # 通常料金を返却
+        return price_weekday
+
 

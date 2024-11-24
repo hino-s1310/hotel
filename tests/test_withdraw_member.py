@@ -1,10 +1,8 @@
-from hotel.pages.home import HomePage
-from hotel.pages.mypage import MyPage
 from playwright.sync_api import expect
 import re
 
-def test_withdraw_member(home_page: HomePage,
-                my_page: MyPage,
+def test_withdraw_member(home_page,
+                my_page,
                 signup) -> None:
 
     # 退会するボタンを押下
